@@ -1,0 +1,8 @@
+# List of files ignored when copying all contents from root folder into docker image
+test
+.env
+.gitignore
+Dockerfile
+LICENSE
+README.md
+package-lock.json
