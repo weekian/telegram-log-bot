@@ -4,7 +4,7 @@
 
 Telegram bot for logging daily work done
 
-## TO Do
+## To Do
 
 1. Dockerizing app
 2. Docker compose for Redis (cache) and PostgreSQL (persistence)
