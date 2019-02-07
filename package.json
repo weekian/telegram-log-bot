@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-build": "docker build -t bot .",
-    "dev": "docker run -d -p 8080:80 bot:latest",
+    "dev-build": "docker build -t bot -f dev/Dockerfile . ",
+    "dev": "docker run -p 8080:80 bot:latest",
+    "dev-run": "node -r dotenv/config index.js",
     "start": "node index.js"
   },
   "repository": {
