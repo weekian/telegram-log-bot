@@ -2,6 +2,9 @@
   "name": "telegram-log-bot",
   "version": "0.1.0",
   "description": "Telegram bot for logging daily personal work done",
+  "engines": {
+    "node": "10.13.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
