@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node -r dotenv/config index.js",
+    "dev-build": "docker build -t bot .",
+    "dev": "docker run -d -p 8080:80 bot:latest",
     "start": "node index.js"
   },
   "repository": {
@@ -28,6 +29,7 @@
     "mocha": "^5.2.0"
   },
   "dependencies": {
+    "express": "^4.16.4",
     "morgan": "^1.9.1",
     "telegraf": "^3.27.0",
     "telegraf-session-redis": "^5.1.0"
