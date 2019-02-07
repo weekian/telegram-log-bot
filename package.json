@@ -4,11 +4,12 @@
   "description": "Telegram bot for logging daily personal work done",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-build": "docker build -t bot -f dev/Dockerfile . ",
+    "start": "node index.js",
+    "heroku-deploy": "git push heroku master",
     "dev": "docker run -p 8080:80 bot:latest",
+    "dev-build": "docker build -t bot -f dev/Dockerfile . ",
     "dev-run": "node -r dotenv/config index.js",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
