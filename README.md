@@ -6,8 +6,9 @@ Telegram bot for logging daily work done
 
 ## To Do
 
-1. Dockerizing app
-2. Docker compose for Redis (cache) and PostgreSQL (persistence)
-3. Docker secrets
-4. TravisCI
-5. Coveralls
+1. Docker compose for Redis (cache) and PostgreSQL (persistence)
+2. Docker secrets
+3. TravisCI
+4. Coveralls
+5. Typescript
+6. eslint
