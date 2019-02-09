@@ -1,3 +1,4 @@
-const expect = require('chai').expect;
+// @flow
+import { expect as e } from 'chai';
 
-module.exports = expect;
+export const expect = e;
