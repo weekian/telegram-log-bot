@@ -2,12 +2,12 @@ language: node_js
 node_js:
   - "10.13.0"
 sudo: false
-cache:
-  directories:
-    - node_modules
+cache: npm
 script:
   # Run linting
   # - npm run lint
   - npm run loc
+  - npm run locc
+  - npm run loccc
   # Run test script
   - npm run test
