@@ -8,7 +8,6 @@ Telegram bot for logging daily work done
 
 1. Docker compose for Redis (cache) and PostgreSQL (persistence)
 2. Docker secrets
-3. TravisCI
-4. Coveralls
-5. Typescript
-6. eslint
+3. Coveralls
+4. Typescript
+5. eslint
