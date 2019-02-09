@@ -10,7 +10,7 @@
     "build": "babel src -d dist",
     "flow": "flow",
     "start": "npm run build && node -r dotenv/config dist/index.js",
-    "test": "mocha --require @babel/register --require @babel/polyfill \"tests/\"",
+    "test": "mocha --require @babel/register --require @babel/polyfill \"tests/**/*.spec.js\"",
     "loc": "ls -la",
     "locc": "cd tests && ls -la",
     "loccc": "cd tests/unit && ls -la"
