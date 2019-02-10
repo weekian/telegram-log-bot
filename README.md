@@ -11,3 +11,4 @@ Telegram bot for logging daily work done
 3. Coveralls
 4. Typescript
 5. eslint
+6. Travis - Only PR and merges to develop
