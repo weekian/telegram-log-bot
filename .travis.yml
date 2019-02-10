@@ -5,8 +5,11 @@ language: node_js
 node_js:
   - "10.13.0"
 
-# Only run on PRs or merges into master and develop
-if: branch IN (master, develop) AND type IN (pull_request, push, cron)
+# Only run any changes to master and develop branches
+branches:
+  only: 
+    - master
+    - develop
 
 # Only clone the latest code 
 git:
