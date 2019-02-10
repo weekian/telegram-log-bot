@@ -1,5 +1,5 @@
 # List of files ignored when copying all contents from root folder into docker image
-test
+tests
 .env
 .gitignore
 Dockerfile
@@ -8,3 +8,4 @@ README.md
 package-lock.json
 heroku.yml
 dev
+dist
