@@ -3,17 +3,17 @@ language: node_js
 
 # Version of nodejs (and npm) to be installed
 node_js:
-  - "10.13.0"
+    - "10.13.0"
 
 # Only run any changes to master and develop branches
 branches:
-  only: 
-    - master
-    - develop
+    only:
+        - master
+        - develop
 
-# Only clone the latest code 
+# Only clone the latest code
 git:
-  depth: false
+    depth: false
 
 # Run commands in host machine in non-sudo
 sudo: false
@@ -23,7 +23,7 @@ cache: npm
 
 # Script for TravisCI to run
 script:
-  # Run test scripts
-  - npm run test
-  # Run linting
-  # - npm run lint
+    # Run test scripts
+    - npm run test
+    # Run linting
+    # - npm run lint
