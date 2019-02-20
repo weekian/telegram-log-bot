@@ -1,2 +1,1 @@
-// @flow
-export const generateResponse = () => `Hello World @ ${(new Date()).toString()}`;
+export default () => `Hello World @ ${new Date().toString()}`;
