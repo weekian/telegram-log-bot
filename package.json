@@ -20,6 +20,7 @@
         "lint": "eslint src/**",
         "prettier": "prettier --check \"src/**/*.js\"",
         "dev": "npm run build && node -r dotenv/config dist/index.js",
+        "babel": "node -r dotenv/config -r @babel/register src/index.js",
         "start": "node dist/index.js",
         "heroku-postbuild": "npm run build"
     },

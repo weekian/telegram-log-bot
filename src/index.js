@@ -1,6 +1,6 @@
 import Telegraf from "telegraf";
 import express from "express";
-import * as utils from "./helper";
+import generateResponse from "./helper";
 
 function sum(a: number, b: number): number {
     return a + b;
@@ -9,7 +9,7 @@ function sum(a: number, b: number): number {
 const app = express();
 
 app.get("/", (req, res) => {
-    res.send(`${utils.generateResponse()} ${sum(1, 2)}`);
+    res.send(`${generateResponse()} ${sum(1, 2)}`);
 });
 
 app.listen(process.env.PORT, () => {
