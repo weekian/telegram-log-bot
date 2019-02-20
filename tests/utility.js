@@ -1,4 +1,4 @@
 // @flow
-import { expect as e } from 'chai';
+import { expect } from "chai";
 
-export const expect = e;
+export default expect;
