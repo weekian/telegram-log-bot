@@ -1,11 +1,15 @@
 {
     "extends": ["airbnb-base", "plugin:flowtype/recommended", "prettier"],
-    "plugins": ["prettier", "flowtype"],
+    "plugins": ["prettier", "flowtype", "chai-friendly"],
     "rules": {
         "prettier/prettier": "error",
-        "flowtype/no-types-missing-file-annotation": 0
+        "flowtype/no-types-missing-file-annotation": 0,
+        "class-methods-use-this": "off",
+        "no-unused-expressions": 0,
+        "chai-friendly/no-unused-expressions": 2
     },
     "env": {
-        "node": true
+        "node": true,
+        "mocha": true
     }
 }

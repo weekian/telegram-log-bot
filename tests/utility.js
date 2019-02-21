@@ -1,4 +1,7 @@
 // @flow
-import { expect } from "chai";
+import chai from "chai";
+import chaiString from "chai-string";
 
-export default expect;
+chai.use(chaiString);
+
+export default chai.expect;

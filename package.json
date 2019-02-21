@@ -48,10 +48,12 @@
         "@babel/register": "^7.0.0",
         "babel-eslint": "^10.0.1",
         "chai": "^4.2.0",
+        "chai-string": "^1.5.0",
         "dotenv": "^6.2.0",
         "eslint": "^5.13.0",
         "eslint-config-airbnb-base": "^13.1.0",
         "eslint-config-prettier": "^4.0.0",
+        "eslint-plugin-chai-friendly": "^0.4.1",
         "eslint-plugin-flowtype": "^3.2.1",
         "eslint-plugin-import": "^2.16.0",
         "eslint-plugin-prettier": "^3.0.1",
@@ -64,6 +66,8 @@
     "dependencies": {
         "express": "^4.16.4",
         "morgan": "^1.9.1",
+        "outdent": "^0.7.0",
+        "pg": "^7.8.1",
         "telegraf": "^3.27.0",
         "telegraf-session-redis": "^5.1.0"
     }
