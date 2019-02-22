@@ -15,6 +15,6 @@ describe("start", () => {
         const result: string = start.process(name);
         expect(result).to.be.a("string");
         expect(result).to.not.be.empty;
-        expect(result).to.startWith(`Hi ${name},`);
+        expect(result.startsWith(`Hi ${name},`)).to.be.true;
     });
 });

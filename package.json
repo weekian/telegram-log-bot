@@ -66,7 +66,6 @@
     "dependencies": {
         "express": "^4.16.4",
         "morgan": "^1.9.1",
-        "outdent": "^0.7.0",
         "pg": "^7.8.1",
         "telegraf": "^3.27.0",
         "telegraf-session-redis": "^5.1.0"
