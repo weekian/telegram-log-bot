@@ -1,5 +1,5 @@
 export default class StartHandler {
-    process(name: string): string {
+    process(name) {
         return (
             `Hi ${name}, here are some handy tips to get you started.\n\n` +
             "- /checkin starts a session and /checkout ends a session.\n\n" +

@@ -1,1 +1,1 @@
-// @flow
+import Telegraf from "telegraf";

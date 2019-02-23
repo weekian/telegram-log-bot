@@ -1,16 +1,10 @@
-// @flow
-import type { $Request, $Response, express$Application } from "express";
 import express from "express";
 import morgan from "morgan";
 
 // Server is required as Heroku requires application to listen to
 // $PORT env variable. Heroku will close the application otherwise.
 export default class Server {
-    app: express$Application;
-
-    port: string;
-
-    constructor(port: string, environment: string) {
+    constructor(port, environment) {
         this.app = express();
         this.port = port;
 
@@ -19,12 +13,12 @@ export default class Server {
 
         // Generic endpoint for uptime robot to send request to
         // Ensures application is kept 'hot'
-        this.app.get("/", (req: $Request, res: $Response) => {
+        this.app.get("/", (req, res) => {
             res.send("hello world");
         });
     }
 
-    start(): void {
+    start() {
         this.app.listen(this.port);
     }
 }

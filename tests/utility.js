@@ -1,4 +1,3 @@
-// @flow
 import chai from "chai";
 import chaiString from "chai-string";
 
