@@ -57,7 +57,8 @@
         "express": "^4.16.4",
         "morgan": "^1.9.1",
         "pg": "^7.8.1",
-        "telegraf": "^3.27.0",
-        "telegraf-session-redis": "^5.1.0"
+        "pg-hstore": "^2.3.2",
+        "sequelize": "^4.42.0",
+        "telegraf": "^3.27.0"
     }
 }
