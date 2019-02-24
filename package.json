@@ -11,7 +11,7 @@
         "start": "node dist/index.js",
         "build": "babel src -d dist",
         "dev": "npm run build && node -r dotenv/config dist/index.js",
-        "babel": "node -r dotenv/config -r @babel/register src/index.js",
+        "babel": "babel-node --require node_modules/dotenv/config src",
         "test": "mocha --require @babel/register --require @babel/polyfill tests/**/*.spec.js",
         "lint": "eslint src/**",
         "flow": "flow",
@@ -38,9 +38,11 @@
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.2.2",
-        "@babel/polyfill": "^7.2.5",
+        "@babel/node": "^7.2.2",
+        "@babel/plugin-transform-async-to-generator": "^7.2.0",
+        "@babel/plugin-transform-runtime": "^7.2.0",
         "@babel/preset-env": "^7.3.1",
-        "@babel/register": "^7.0.0",
+        "@babel/runtime": "^7.3.1",
         "babel-eslint": "^10.0.1",
         "chai": "^4.2.0",
         "chai-string": "^1.5.0",
@@ -56,11 +58,13 @@
         "sinon": "^7.2.4"
     },
     "dependencies": {
+        "bluebird": "^3.5.3",
         "express": "^4.16.4",
         "morgan": "^1.9.1",
         "pg": "^7.8.1",
         "pg-hstore": "^2.3.2",
         "sequelize": "^4.42.0",
-        "telegraf": "^3.27.0"
+        "telegraf": "^3.27.0",
+        "winston": "^3.2.1"
     }
 }
