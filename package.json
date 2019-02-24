@@ -17,7 +17,9 @@
         "flow": "flow",
         "prettier": "prettier --check \"src/**/*.js\"",
         "install-flow-defs": "flow-typed install",
-        "heroku-postbuild": "npm run build"
+        "heroku-postbuild": "npm run build",
+        "docker-pull-postgres": "docker pull postgres:10",
+        "docker-run-postgres": "docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres:10"
     },
     "repository": {
         "type": "git",
