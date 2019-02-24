@@ -1,6 +1,6 @@
 import { describe, it, before } from "mocha";
 import expect from "../utility";
-import StartHandler from "../../src/start";
+import StartHandler from "../../src/commands/start";
 
 describe("start", () => {
     let start;
