@@ -1,6 +1,6 @@
 export default {
-    name: "manual",
+    name: "help",
     process: async () => {
-        return "manual";
+        return "help";
     },
 };

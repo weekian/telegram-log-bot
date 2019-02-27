@@ -1,6 +1,6 @@
 export default {
     name: "leaderboard",
-    process: () => {
+    process: async () => {
         return "leaderboard";
     },
 };

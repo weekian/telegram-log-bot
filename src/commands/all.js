@@ -1,6 +1,6 @@
 export default {
     name: "all",
-    process: () => {
+    process: async () => {
         return "all";
     },
 };

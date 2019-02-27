@@ -1,6 +1,6 @@
 export default {
     name: "skip",
-    process: () => {
+    process: async () => {
         return "skip";
     },
 };
