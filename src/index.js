@@ -1,12 +1,39 @@
 // Entrypoint to starting bot application
+import Telegraf from "telegraf";
 import Server from "./server";
 import Bot from "./bot";
-import Database from "./db/db";
+import Database from "./db";
+import startCommand from "./commands/start";
+import checkinCommand from "./commands/checkin";
+import checkoutCommand from "./commands/checkout";
+import manualCommand from "./commands/manual";
+import allCommand from "./commands/all";
+import skipCommand from "./commands/skip";
+import leaderboardCommand from "./commands/leaderboard";
+import addedToGroupEventHandler from "./commands/groupHandler";
 
-const { PORT, NODE_ENV, TELEGRAM_TOKEN, DATABASE_URL } = process.env;
+(async () => {
+    const { PORT, NODE_ENV, TELEGRAM_TOKEN, DATABASE_URL } = process.env;
 
-const server = new Server(PORT, NODE_ENV);
-const bot = new Bot(TELEGRAM_TOKEN, NODE_ENV, Database(DATABASE_URL));
+    const database = await Database(DATABASE_URL, NODE_ENV);
+    const server = new Server(PORT, NODE_ENV);
+    const bot = new Bot(
+        Telegraf,
+        TELEGRAM_TOKEN,
+        NODE_ENV,
+        database,
+        addedToGroupEventHandler,
+        [
+            startCommand,
+            checkinCommand,
+            checkoutCommand,
+            manualCommand,
+            allCommand,
+            skipCommand,
+        ],
+        [leaderboardCommand]
+    );
 
-server.start();
-bot.start();
+    await bot.start();
+    server.start();
+})();

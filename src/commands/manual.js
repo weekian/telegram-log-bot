@@ -1,6 +1,6 @@
 export default {
-    name: "checkin",
+    name: "manual",
     process: () => {
-        return "checkin";
+        return "manual";
     },
 };
