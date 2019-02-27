@@ -8,7 +8,7 @@ import startCommand from "../../src/commands/start";
 2. Return message with user's first_name
 3. Save user to 
  */
-describe("start", () => {
+describe("/start command", () => {
     let findOrCreateStub;
 
     beforeEach(() => {
