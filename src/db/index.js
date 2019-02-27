@@ -11,14 +11,14 @@ export default (url, env) => {
         // ---------- Model Definitions ----------------
         const Person = db.import(`${__dirname}/models/person`);
         const Session = db.import(`${__dirname}/models/session`);
-        const Chat = db.import(`${__dirname}/models/chat`);
+        const GroupChat = db.import(`${__dirname}/models/GroupChat`);
 
         // ---------- Model Association ----------------
-        Chat.belongsToMany(Person, {
+        GroupChat.belongsToMany(Person, {
             through: "member",
         });
 
-        Person.belongsToMany(Chat, {
+        Person.belongsToMany(GroupChat, {
             through: "member",
         });
 
@@ -36,7 +36,7 @@ export default (url, env) => {
                     db,
                     Person,
                     Session,
-                    Chat,
+                    GroupChat,
                 });
             })
             .catch((err) => {

@@ -5,7 +5,7 @@ export default (sequelize, DataTypes) => {
             primaryKey: true,
         },
         kind: {
-            type: DataTypes.ENUM("private", "group"),
+            type: DataTypes.ENUM("group"),
             allowNull: false,
         },
     });
