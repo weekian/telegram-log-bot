@@ -12,6 +12,7 @@ export default class Bot {
         env,
         database,
         addedToGroupHandler,
+        commands = [],
         privateCommands = [],
         groupCommands = []
     ) {
@@ -27,6 +28,7 @@ export default class Bot {
         // Registering of telegram commands
         this.registerPrivateCommands(privateCommands);
         this.registerGroupCommands(groupCommands);
+        this.registerCommands(commands);
         this.handleAddedToGroup(addedToGroupHandler);
 
         this.bot.on("message", (ctx) => {
@@ -34,6 +36,24 @@ export default class Bot {
             console.log(JSON.stringify(ctx.message, null, 4));
             console.log(JSON.stringify(ctx.chat, null, 4));
         });
+    }
+
+    // Command handlers for all types of chats
+    registerCommands(commands) {
+        commands.forEach((command) => {
+            this.bot.command(command.name, async (ctx) => {
+                ctx.reply(
+                    await command.process({
+                        message: ctx.message,
+                        from: ctx.from,
+                        database: this.database,
+                        Person: this.Person,
+                        GroupChat: this.GroupChat,
+                        Session: this.Session,
+                    })
+                );
+            });
+        }, this);
     }
 
     // Command handlers for private chats
