@@ -10,8 +10,7 @@
     "scripts": {
         "start": "node dist/index.js",
         "build": "babel src -d dist",
-        "dev": "npm run build && node -r dotenv/config dist/index.js",
-        "babel": "babel-node --require node_modules/dotenv/config src",
+        "dev": "nodemon --watch src/ --exec \"babel src -d dist --source-maps && node -r dotenv/config --inspect dist/\"",
         "test": "mocha --require @babel/register --require @babel/polyfill tests/**/*.spec.js",
         "lint": "eslint src/**",
         "flow": "flow",
@@ -38,10 +37,11 @@
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.2.2",
-        "@babel/node": "^7.2.2",
         "@babel/plugin-transform-async-to-generator": "^7.2.0",
         "@babel/plugin-transform-runtime": "^7.2.0",
+        "@babel/polyfill": "^7.2.5",
         "@babel/preset-env": "^7.3.1",
+        "@babel/register": "^7.0.0",
         "@babel/runtime": "^7.3.1",
         "babel-eslint": "^10.0.1",
         "chai": "^4.2.0",
@@ -54,6 +54,7 @@
         "eslint-plugin-import": "^2.16.0",
         "eslint-plugin-prettier": "^3.0.1",
         "mocha": "^5.2.0",
+        "nodemon": "^1.18.10",
         "prettier": "^1.16.4",
         "sinon": "^7.2.4"
     },
