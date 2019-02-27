@@ -59,10 +59,10 @@ export default class Bot {
     // Command handlers for private chats
     registerPrivateCommands(privateCommands) {
         privateCommands.forEach((command) => {
-            this.bot.command(command.name, (ctx) => {
+            this.bot.command(command.name, async (ctx) => {
                 if (this.isPrivateChat(ctx.chat)) {
                     ctx.reply(
-                        command.process({
+                        await command.process({
                             message: ctx.message,
                             from: ctx.from,
                             database: this.database,
@@ -73,7 +73,7 @@ export default class Bot {
                     );
                 } else {
                     ctx.reply(
-                        "Oops, this command is reserved for private chats only. Send /help unsure"
+                        "Oops, this command is reserved for private chats only. Send /help if unsure"
                     );
                 }
             });
@@ -83,10 +83,10 @@ export default class Bot {
     // Command handlers for group chats
     registerGroupCommands(groupCommands) {
         groupCommands.forEach((command) => {
-            this.bot.command(command.name, (ctx) => {
+            this.bot.command(command.name, async (ctx) => {
                 if (!this.isPrivateChat(ctx.chat)) {
                     ctx.reply(
-                        command.process({
+                        await command.process({
                             database: this.database,
                             Person: this.Person,
                             GroupChat: this.GroupChat,
