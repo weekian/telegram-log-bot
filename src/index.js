@@ -10,6 +10,7 @@ import manualCommand from "./commands/manual";
 import allCommand from "./commands/all";
 import skipCommand from "./commands/skip";
 import leaderboardCommand from "./commands/leaderboard";
+import helpCommand from "./commands/help";
 import addedToGroupEventHandler from "./commands/groupHandler";
 
 (async () => {
@@ -23,6 +24,7 @@ import addedToGroupEventHandler from "./commands/groupHandler";
         NODE_ENV,
         database,
         addedToGroupEventHandler,
+        [helpCommand],
         [
             startCommand,
             checkinCommand,
