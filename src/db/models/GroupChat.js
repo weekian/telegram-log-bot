@@ -4,9 +4,5 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             primaryKey: true,
         },
-        kind: {
-            type: DataTypes.ENUM("group"),
-            allowNull: false,
-        },
     });
 };
