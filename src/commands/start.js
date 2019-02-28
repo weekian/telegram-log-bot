@@ -9,11 +9,10 @@ export default {
         });
 
         const greeting = isCreated
-            ? `Welcome back ${person.name},`
-            : `Hi ${person.name},`;
-
+            ? `Hi ${person.name},`
+            : `Welcome back ${person.name},`;
         const introduction =
-            "\n\nClick /checkin to begin a session. /checkout to end a session\n\nAdd me to a group chat and send /leaderboard to see everybody's logged sessions.\n\nGood luck!";
+            "\n\nIn a private chat, /checkin to begin a session. /checkout to end a session\n\nAdd me to a group chat and send /leaderboard to track everybody's logged sessions.\n\n/help to see all the other commands\n\nRemember, you are what you are willing to struggle for.\n\nGood luck!";
 
         return greeting.concat(introduction);
     },
