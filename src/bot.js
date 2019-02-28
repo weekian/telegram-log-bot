@@ -73,7 +73,7 @@ export default class Bot {
                     );
                 } else {
                     ctx.reply(
-                        "Oops, this command is reserved for private chats only. Send /help if unsure"
+                        "Oops, this command is reserved for private chats only. /help if unsure"
                     );
                 }
             });
@@ -95,7 +95,7 @@ export default class Bot {
                     );
                 } else {
                     ctx.reply(
-                        "Oops, this command is reserved for group chats only. Send /help if unsure"
+                        "Oops, this command is reserved for group chats only. /help if unsure"
                     );
                 }
             });
@@ -104,7 +104,28 @@ export default class Bot {
 
     // Command handlers for add to group
     handleAddedToGroup(handler) {
-        // logic here
+        this.bot.on("message", async (ctx) => {
+            if (this.isAddedToGroupChat(ctx.message)) {
+                ctx.reply(
+                    await handler.process({
+                        database: this.database,
+                        Person: this.Person,
+                        GroupChat: this.GroupChat,
+                        Session: this.Session,
+                    })
+                );
+            }
+        });
+    }
+
+    isAddedToGroupChat(message) {
+        return (
+            message.group_chat_created ||
+            (message.new_chat_members &&
+                message.new_chat_members.some(
+                    (e) => e.id === this.bot.options.id
+                ))
+        );
     }
 
     isPrivateChat(chat) {
@@ -115,6 +136,7 @@ export default class Bot {
         // Configure to group chat commands that contain bot username
         const botInfo = await this.bot.telegram.getMe();
         this.bot.options.username = botInfo.username;
+        this.bot.options.id = botInfo.id;
 
         // Starts listening for messages
         this.bot.startPolling();
