@@ -24,9 +24,8 @@ import addedToGroupEventHandler from "./commands/groupHandler";
         NODE_ENV,
         database,
         addedToGroupEventHandler,
-        [helpCommand],
+        [helpCommand, startCommand],
         [
-            startCommand,
             checkinCommand,
             checkoutCommand,
             manualCommand,
