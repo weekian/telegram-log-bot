@@ -1,6 +1,13 @@
 export default {
     name: "checkin",
-    process: async () => {
+    process: async ({
+        message,
+        from,
+        database,
+        Person,
+        GroupChat,
+        Session,
+    }) => {
         return "checkin";
     },
 };
