@@ -8,3 +8,12 @@ export default chai.expect;
 export const Person = {
     findOrCreate: () => {},
 };
+
+export class Telegram {
+    constructor(token) {
+        this.token = token;
+        this.options = {
+            id: 1141243,
+        };
+    }
+}
