@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/commands/start.3.js"],"names":["name","process"],"mappings":";;;;;;eAAe;AACXA,EAAAA,IAAI,EAAE,OADK;AAEXC,EAAAA,OAAO,EAAE,mBAAM;AACX,WAAO,aAAP;AACH;AAJU,C","sourcesContent":["export default {\n    name: \"start\",\n    process: () => {\n        return \"hello world\";\n    },\n};\n"],"file":"start.3.js"}
