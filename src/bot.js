@@ -114,16 +114,17 @@ export default class Bot {
 
     isAddedToGroupChat(message) {
         return (
-            message.group_chat_created ||
-            (message.new_chat_members &&
-                message.new_chat_members.some(
-                    (e) => e.id === this.bot.options.id
-                ))
+            !!message &&
+            (message.group_chat_created ||
+                (!!message.new_chat_members &&
+                    message.new_chat_members.some(
+                        (e) => e.id === this.bot.options.id
+                    )))
         );
     }
 
     isPrivateChat(chat) {
-        return chat && chat.type && chat.type === "private";
+        return !!chat && chat.type === "private";
     }
 
     async start() {
