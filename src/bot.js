@@ -30,12 +30,6 @@ export default class Bot {
         this.registerGroupCommands(groupCommands);
         this.registerCommands(commands);
         this.handleAddedToGroup(addedToGroupHandler);
-
-        this.bot.on("message", (ctx) => {
-            console.log("Unknown command received");
-            console.log(JSON.stringify(ctx.message, null, 4));
-            console.log(JSON.stringify(ctx.chat, null, 4));
-        });
     }
 
     // Command handlers for all types of chats
