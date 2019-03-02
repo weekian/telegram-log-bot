@@ -3,24 +3,22 @@
     "version": "0.1.0",
     "description": "Telegram bot for logging daily personal work done",
     "engines": {
-        "node": "10.13.0"
-    },
-    "husky": {
-        "hooks": {
-            "pre-push": "npm test && npm run build",
-            "pre-commit": "npm run lint"
-        }
+        "node": "10.13.0",
+        "npm": "6.4.1"
     },
     "main": "dist/index.js",
     "scripts": {
+        "start": "node dist/index.js",
         "build": "babel src -d dist",
-        "flow": "flow",
+        "dev": "nodemon --watch src/ --exec \"babel src -d dist --source-maps && node -r dotenv/config --inspect dist/\"",
         "test": "mocha --require @babel/register --require @babel/polyfill tests/**/*.spec.js",
         "lint": "eslint src/**",
+        "flow": "flow",
         "prettier": "prettier --check \"src/**/*.js\"",
-        "dev": "npm run build && node -r dotenv/config dist/index.js",
-        "start": "node dist/index.js",
-        "heroku-postbuild": "npm run build"
+        "install-flow-defs": "flow-typed install",
+        "heroku-postbuild": "npm run build",
+        "docker-pull-postgres": "docker pull postgres:10",
+        "docker-run-postgres": "docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres:10"
     },
     "repository": {
         "type": "git",
@@ -39,28 +37,35 @@
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.2.2",
+        "@babel/plugin-transform-async-to-generator": "^7.2.0",
+        "@babel/plugin-transform-runtime": "^7.2.0",
         "@babel/polyfill": "^7.2.5",
         "@babel/preset-env": "^7.3.1",
-        "@babel/preset-flow": "^7.0.0",
         "@babel/register": "^7.0.0",
+        "@babel/runtime": "^7.3.1",
         "babel-eslint": "^10.0.1",
         "chai": "^4.2.0",
+        "chai-string": "^1.5.0",
         "dotenv": "^6.2.0",
         "eslint": "^5.13.0",
         "eslint-config-airbnb-base": "^13.1.0",
         "eslint-config-prettier": "^4.0.0",
-        "eslint-plugin-flowtype": "^3.2.1",
+        "eslint-plugin-chai-friendly": "^0.4.1",
         "eslint-plugin-import": "^2.16.0",
         "eslint-plugin-prettier": "^3.0.1",
-        "flow-bin": "^0.92.1",
-        "husky": "^1.3.1",
         "mocha": "^5.2.0",
-        "prettier": "^1.16.4"
+        "nodemon": "^1.18.10",
+        "prettier": "^1.16.4",
+        "sinon": "^7.2.4"
     },
     "dependencies": {
+        "bluebird": "^3.5.3",
         "express": "^4.16.4",
         "morgan": "^1.9.1",
+        "pg": "^7.8.1",
+        "pg-hstore": "^2.3.2",
+        "sequelize": "^4.42.0",
         "telegraf": "^3.27.0",
-        "telegraf-session-redis": "^5.1.0"
+        "winston": "^3.2.1"
     }
 }

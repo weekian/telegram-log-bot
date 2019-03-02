@@ -1,27 +1,40 @@
+// Entrypoint to starting bot application
 import Telegraf from "telegraf";
-import express from "express";
-import * as utils from "./helper";
+import Server from "./server";
+import Bot from "./bot";
+import Database from "./db";
+import startCommand from "./commands/start";
+import checkinCommand from "./commands/checkin";
+import checkoutCommand from "./commands/checkout";
+import manualCommand from "./commands/manual";
+import allCommand from "./commands/all";
+import skipCommand from "./commands/skip";
+import leaderboardCommand from "./commands/leaderboard";
+import helpCommand from "./commands/help";
+import addedToGroupEventHandler from "./commands/groupHandler";
 
-function sum(a: number, b: number): number {
-    return a + b;
-}
+(async () => {
+    const { PORT, NODE_ENV, TELEGRAM_TOKEN, DATABASE_URL } = process.env;
 
-const app = express();
+    const database = await Database(DATABASE_URL, NODE_ENV);
+    const server = new Server(PORT, NODE_ENV);
+    const bot = new Bot(
+        Telegraf,
+        TELEGRAM_TOKEN,
+        NODE_ENV,
+        database,
+        addedToGroupEventHandler,
+        [helpCommand, startCommand],
+        [
+            checkinCommand,
+            checkoutCommand,
+            manualCommand,
+            allCommand,
+            skipCommand,
+        ],
+        [leaderboardCommand]
+    );
 
-app.get("/", (req, res) => {
-    res.send(`${utils.generateResponse()} ${sum(1, 2)}`);
-});
-
-app.listen(process.env.PORT, () => {
-    // console.log(`Listening to ${process.env.PORT || 8080}`);
-});
-
-const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
-
-bot.start((ctx) =>
-    ctx.reply(
-        `[${process.env.NODE_ENV ||
-            "development"}] Hello World @ ${new Date().toString()}`
-    )
-);
-bot.launch();
+    await bot.start();
+    server.start();
+})();
