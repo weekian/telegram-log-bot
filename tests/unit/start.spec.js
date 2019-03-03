@@ -24,10 +24,7 @@ describe("/start command", () => {
             id: 556612,
         };
 
-        findOrCreateStub.resolves([
-            { id: from.id, name: from.first_name },
-            true,
-        ]);
+        findOrCreateStub.resolves([{ id: from.id }, true]);
 
         const result = await startCommand.process({
             Person,
@@ -39,7 +36,6 @@ describe("/start command", () => {
             findOrCreateStub.calledWithExactly({
                 where: {
                     id: from.id,
-                    name: from.first_name,
                 },
             })
         ).to.be.true;
@@ -70,7 +66,6 @@ describe("/start command", () => {
             findOrCreateStub.calledWithExactly({
                 where: {
                     id: from.id,
-                    name: from.first_name,
                 },
             })
         ).to.be.true;
