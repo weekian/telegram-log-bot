@@ -15,9 +15,6 @@ export default {
             where: {
                 id: from.id,
             },
-            defaults: {
-                name: from.first_name,
-            },
         });
 
         const hasPendingCheckouts =
@@ -31,7 +28,7 @@ export default {
 
         if (hasPendingCheckouts) {
             return `Hi ${
-                person.name
+                from.first_name
             }, you have an ongoing session. Do you mean /checkout?`;
         }
         // Converts Unix (utc) timestamp to SG time
@@ -49,6 +46,8 @@ export default {
             "h:mA [on] dddd, Do MMMM YYYY"
         );
 
-        return `Hi ${person.name}, you have checked in at ${displayLocalTime}`;
+        return `Hi ${
+            from.first_name
+        }, you have checked in at ${displayLocalTime}`;
     },
 };

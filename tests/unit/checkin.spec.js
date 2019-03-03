@@ -17,7 +17,6 @@ describe("/checkin command", () => {
     };
     const findOrCreateReturnedPerson = {
         id: from.id,
-        name: from.first_name,
         createSession: async () => {
             return {
                 personId: from.id,
