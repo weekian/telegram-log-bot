@@ -4,6 +4,8 @@ export default {
         const [person, isCreated] = await Person.findOrCreate({
             where: {
                 id: from.id,
+            },
+            defaults: {
                 name: from.first_name,
             },
         });

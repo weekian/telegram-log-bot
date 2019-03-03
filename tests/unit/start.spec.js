@@ -39,6 +39,8 @@ describe("/start command", () => {
             findOrCreateStub.calledWithExactly({
                 where: {
                     id: from.id,
+                },
+                defaults: {
                     name: from.first_name,
                 },
             })
@@ -70,6 +72,8 @@ describe("/start command", () => {
             findOrCreateStub.calledWithExactly({
                 where: {
                     id: from.id,
+                },
+                defaults: {
                     name: from.first_name,
                 },
             })
