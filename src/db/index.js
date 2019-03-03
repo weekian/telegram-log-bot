@@ -6,6 +6,9 @@ export default (url, env) => {
         // ---------- Database Initialization ----------
         const db = new Sequelize(url, {
             timezone: "+08:00",
+            dialectOptions: {
+                useUTC: false,
+            },
         });
 
         // ---------- Model Definitions ----------------
@@ -23,7 +26,7 @@ export default (url, env) => {
         });
 
         // Defines one to many relationship for Person has many session and session belongs to one Person
-        Session.hasOne(Person);
+        Session.belongsTo(Person); // personId added to Session
         Person.hasMany(Session);
 
         // ---------- (Optional) Creation of tables ----
