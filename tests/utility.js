@@ -9,6 +9,10 @@ export const Person = {
     findOrCreate: () => {},
 };
 
+export const Session = {
+    count: () => {},
+};
+
 export class Telegram {
     constructor(token) {
         this.token = token;

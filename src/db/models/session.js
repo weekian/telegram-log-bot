@@ -11,7 +11,7 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             primaryKey: true,
         },
-        CheckoutTimestamp: {
+        checkoutTimestamp: {
             type: DataTypes.DATE,
             allowNull: true,
         },
