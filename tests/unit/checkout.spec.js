@@ -1,5 +1,4 @@
 import { describe, it, beforeEach, afterEach } from "mocha";
-import moment from "moment";
 import sinon from "sinon";
 import expect, { Person, Session } from "../utility";
 import checkoutCommand from "../../src/commands/checkout";
