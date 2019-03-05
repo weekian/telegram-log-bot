@@ -52,9 +52,9 @@ export default {
             checkoutTimestamp: localEndTime.toDate(),
         });
 
-        const displayLocalEndTime = moment(
-            activeSession.checkoutTimestamp
-        ).format("h:mA [on] dddd, Do MMMM YYYY");
+        const displayLocalEndTime = moment(localEndTime).format(
+            "h:mA [on] dddd, Do MMMM YYYY"
+        );
 
         const sessionEndTime = moment(activeSession.checkoutTimestamp);
         const sessionStartTime = moment(activeSession.checkinTimestamp);
