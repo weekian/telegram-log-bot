@@ -68,9 +68,7 @@ describe("/checkout command", () => {
         const result = await checkoutCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 
@@ -85,9 +83,7 @@ describe("/checkout command", () => {
         const result = await checkoutCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 
@@ -105,9 +101,7 @@ describe("/checkout command", () => {
         const result = await checkoutCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 

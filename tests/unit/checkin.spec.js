@@ -55,9 +55,7 @@ describe("/checkin command", () => {
         const result = await checkinCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 
@@ -73,9 +71,7 @@ describe("/checkin command", () => {
         await checkinCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
         expect(personFindOrCreateStub.calledOnce).to.be.true;
@@ -87,9 +83,7 @@ describe("/checkin command", () => {
         const result = await checkinCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 
