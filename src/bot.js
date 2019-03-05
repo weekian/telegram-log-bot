@@ -40,6 +40,7 @@ export default class Bot {
                     await command.process({
                         message: ctx.message,
                         from: ctx.from,
+                        chat: ctx.chat,
                         database: this.database,
                         Person: this.Person,
                         GroupChat: this.GroupChat,
@@ -102,6 +103,7 @@ export default class Bot {
             if (this.isAddedToGroupChat(ctx.message)) {
                 ctx.reply(
                     await handler.process({
+                        chat: ctx.chat,
                         database: this.database,
                         Person: this.Person,
                         GroupChat: this.GroupChat,
