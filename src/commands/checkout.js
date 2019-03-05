@@ -13,13 +13,6 @@ export default {
         GroupChat,
         Session,
     }) => {
-        // 1. findOrCreate Person
-        // 2. If created is true, return no active session error
-        // 3. get array session index 0 where checkoutTimestamp is null
-        // 4. if array is empty, return error
-        // 5. set the checkoutTimestamp to message.date
-        // 6. calculate the duration from session.checkinTimestamp to session.checkoutTimestamp and format it to human-friendly
-        // 7. Return formatted success message
         const [person, created] = await Person.findOrCreate({
             where: {
                 id: from.id,
