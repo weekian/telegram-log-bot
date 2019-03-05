@@ -12,6 +12,7 @@ import skipCommand from "./commands/skip";
 import leaderboardCommand from "./commands/leaderboard";
 import helpCommand from "./commands/help";
 import addedToGroupEventHandler from "./commands/groupHandler";
+import registerCommand from "./commands/register";
 
 (async () => {
     const { PORT, NODE_ENV, TELEGRAM_TOKEN, DATABASE_URL } = process.env;
@@ -24,7 +25,7 @@ import addedToGroupEventHandler from "./commands/groupHandler";
         NODE_ENV,
         database,
         addedToGroupEventHandler,
-        [helpCommand, startCommand],
+        [helpCommand, startCommand, registerCommand],
         [
             checkinCommand,
             checkoutCommand,
