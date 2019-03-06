@@ -1,18 +1,12 @@
 import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
+import Promise from "bluebird";
 
 momentDurationFormatSetup(moment);
 
 export default {
     name: "checkout",
-    process: async ({
-        message,
-        from,
-        database,
-        Person,
-        GroupChat,
-        Session,
-    }) => {
+    process: async ({ message, from, Person, telegram }) => {
         const [person, created] = await Person.findOrCreate({
             where: {
                 id: from.id,
@@ -62,6 +56,20 @@ export default {
         const formattedDuration = moment
             .duration(sessionEndTime.diff(sessionStartTime))
             .format("h[hr] m[min]");
+
+        const groupChats = await person.getGroupChats();
+        const broadcastPromises = [];
+        for (let i = 0; i < groupChats.length; i += 1) {
+            broadcastPromises.push(
+                telegram.sendMessage(
+                    groupChats[i].id,
+                    `Hi everyone, ${from.first_name} has ` +
+                        `checked out at ${displayLocalEndTime}` +
+                        ` and logged a duration of ${formattedDuration}`
+                )
+            );
+        }
+        await Promise.all(broadcastPromises);
 
         return (
             `Hi ${from.first_name}, ` +

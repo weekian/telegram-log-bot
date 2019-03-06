@@ -1,7 +1,6 @@
 import { describe, it, beforeEach, afterEach } from "mocha";
-import moment from "moment";
 import sinon from "sinon";
-import expect, { Person, Session } from "../utility";
+import expect, { Person, Session, telegram } from "../utility";
 import checkoutCommand from "../../src/commands/checkout";
 
 // 1. findOrCreate Person
@@ -13,6 +12,7 @@ import checkoutCommand from "../../src/commands/checkout";
 // 7. Return formatted success message
 
 describe("/checkout command", () => {
+    let telegramSendMessageStub;
     let personFindOrCreateStub;
     const from = {
         id: 12345,
@@ -21,7 +21,7 @@ describe("/checkout command", () => {
     const message = {
         date: 1551796500,
     };
-    const findOrCreateFoundPersonWithActiveSession = {
+    const findOrCreateFoundPersonWithActiveSessionButNoGroupChats = {
         id: from.id,
         getSessions: async () => {
             return [
@@ -40,6 +40,28 @@ describe("/checkout command", () => {
                 },
             ];
         },
+        getGroupChats: async () => [],
+    };
+    const findOrCreateFoundPersonWithActiveSessionAndGroupChats = {
+        id: from.id,
+        getSessions: async () => {
+            return [
+                {
+                    update: async () => {
+                        return {
+                            personId: from.id,
+                            checkinTimestamp: new Date(
+                                "2019-03-05T13:00:00.000Z"
+                            ),
+                            checkoutTimestamp: new Date(
+                                "2019-03-05T14:35:00.000Z"
+                            ),
+                        };
+                    },
+                },
+            ];
+        },
+        getGroupChats: async () => [{ id: -444 }, { id: -555 }],
     };
     const findOrCreateFoundPersonWithNoActiveSession = {
         id: from.id,
@@ -49,10 +71,12 @@ describe("/checkout command", () => {
     };
 
     beforeEach(() => {
+        telegramSendMessageStub = sinon.stub(telegram, "sendMessage");
         personFindOrCreateStub = sinon.stub(Person, "findOrCreate");
     });
 
     afterEach(() => {
+        telegramSendMessageStub.restore();
         personFindOrCreateStub.restore();
     });
 
@@ -62,16 +86,14 @@ describe("/checkout command", () => {
 
     it("should return a message informing user that he/she has checked out out at the time command was triggered and display total duration since checked in", async () => {
         personFindOrCreateStub.resolves([
-            findOrCreateFoundPersonWithActiveSession,
+            findOrCreateFoundPersonWithActiveSessionButNoGroupChats,
             false,
         ]);
 
         const result = await checkoutCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 
@@ -86,9 +108,7 @@ describe("/checkout command", () => {
         const result = await checkoutCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 
@@ -106,14 +126,42 @@ describe("/checkout command", () => {
         const result = await checkoutCommand.process({
             message,
             from,
-            database: {},
             Person,
-            GroupChat: {},
             Session,
         });
 
         expect(result).to.equal(
             "Hi Bob, you do not have any ongoing session. Do you mean to /checkin?"
+        );
+    });
+
+    it("should send a message to all registered group chats when checking out of a session", async () => {
+        personFindOrCreateStub.resolves([
+            findOrCreateFoundPersonWithActiveSessionAndGroupChats,
+            false,
+        ]);
+
+        await checkoutCommand.process({
+            message,
+            from,
+            Person,
+            Session,
+            telegram,
+        });
+
+        const [firstChatId, firstMessage] = telegramSendMessageStub.getCall(
+            0
+        ).args;
+        const [secondChatId, secondMessage] = telegramSendMessageStub.getCall(
+            1
+        ).args;
+
+        expect(telegramSendMessageStub.calledTwice).to.be.true;
+        expect(firstChatId).to.equal(-444);
+        expect(secondChatId).to.equal(-555);
+        expect(firstMessage).to.equal(secondMessage);
+        expect(firstMessage).to.equal(
+            "Hi everyone, Bob has checked out at 10:35PM on Tuesday, 5th March 2019 and logged a duration of 1hr 35mins"
         );
     });
 });
