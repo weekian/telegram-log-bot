@@ -30,7 +30,7 @@ export default (url, env) => {
         Person.hasMany(Session);
 
         // ---------- (Optional) Creation of tables ----
-        const forceDrop = env !== "production";
+        const forceDrop = true; /* env !== "production"; */
         db.sync({
             force: forceDrop,
         })

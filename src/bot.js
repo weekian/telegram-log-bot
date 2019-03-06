@@ -60,6 +60,7 @@ export default class Bot {
                         await command.process({
                             message: ctx.message,
                             from: ctx.from,
+                            telegram: ctx.telegram,
                             database: this.database,
                             Person: this.Person,
                             GroupChat: this.GroupChat,
@@ -82,6 +83,8 @@ export default class Bot {
                 if (!this.isPrivateChat(ctx.chat)) {
                     ctx.reply(
                         await command.process({
+                            from: ctx.from,
+                            chat: ctx.chat,
                             database: this.database,
                             Person: this.Person,
                             GroupChat: this.GroupChat,

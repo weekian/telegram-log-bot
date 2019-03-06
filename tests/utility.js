@@ -18,6 +18,10 @@ export const GroupChat = {
     findOrCreate: () => {},
 };
 
+export const telegram = {
+    sendMessage: () => {},
+};
+
 export class Telegram {
     constructor(token) {
         this.token = token;
