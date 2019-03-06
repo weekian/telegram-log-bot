@@ -25,7 +25,7 @@ import registerCommand from "./commands/register";
         NODE_ENV,
         database,
         addedToGroupEventHandler,
-        [helpCommand, startCommand, registerCommand],
+        [helpCommand, startCommand],
         [
             checkinCommand,
             checkoutCommand,
@@ -33,7 +33,7 @@ import registerCommand from "./commands/register";
             allCommand,
             skipCommand,
         ],
-        [leaderboardCommand]
+        [leaderboardCommand, registerCommand]
     );
 
     await bot.start();
