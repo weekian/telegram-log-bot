@@ -9,5 +9,17 @@
             }
         ],
         ["@babel/plugin-transform-runtime"]
-    ]
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                [
+                    "istanbul",
+                    {
+                        "exclude": ["**/*.spec.js"]
+                    }
+                ]
+            ]
+        }
+    }
 }
