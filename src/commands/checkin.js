@@ -2,14 +2,7 @@ import moment from "moment";
 
 export default {
     name: "checkin",
-    process: async ({
-        message,
-        from,
-        database,
-        Person,
-        GroupChat,
-        Session,
-    }) => {
+    process: async ({ message, from, Person, Session }) => {
         // finds person or creates new if doesn't exist
         const [person] = await Person.findOrCreate({
             where: {

@@ -5,14 +5,7 @@ momentDurationFormatSetup(moment);
 
 export default {
     name: "checkout",
-    process: async ({
-        message,
-        from,
-        database,
-        Person,
-        GroupChat,
-        Session,
-    }) => {
+    process: async ({ message, from, Person }) => {
         const [person, created] = await Person.findOrCreate({
             where: {
                 id: from.id,

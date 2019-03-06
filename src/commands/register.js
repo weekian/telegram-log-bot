@@ -1,14 +1,6 @@
 export default {
     name: "register",
-    process: async ({
-        message,
-        from,
-        chat,
-        database,
-        Person,
-        GroupChat,
-        Session,
-    }) => {
+    process: async ({ from, chat, Person, GroupChat }) => {
         const [person] = await Person.findOrCreate({
             where: {
                 id: from.id,
