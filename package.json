@@ -18,7 +18,7 @@
         "install-flow-defs": "flow-typed install",
         "heroku-postbuild": "npm run build",
         "docker-pull-postgres": "docker pull postgres:10",
-        "docker-run-postgres": "docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres:10"
+        "docker-run-postgres": "docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres:10"
     },
     "repository": {
         "type": "git",
@@ -54,6 +54,7 @@
         "eslint-plugin-prettier": "^3.0.1",
         "mocha": "^5.2.0",
         "nodemon": "^1.18.10",
+        "nyc": "^13.3.0",
         "prettier": "^1.16.4",
         "sinon": "^7.2.4"
     },

@@ -13,6 +13,15 @@ export const Session = {
     count: () => {},
 };
 
+export const GroupChat = {
+    findOne: () => {},
+    findOrCreate: () => {},
+};
+
+export const telegram = {
+    sendMessage: () => {},
+};
+
 export class Telegram {
     constructor(token) {
         this.token = token;
