@@ -19,6 +19,9 @@ export default {
                         checkoutTimestamp: {
                             $eq: null,
                         },
+                        personId: {
+                            $eq: person.id
+                        },
                     },
                 })) !== 0;
 
