@@ -5,6 +5,46 @@
 
 Telegram bot for logging daily work done
 
+## Setup
+
+First install the dependencies
+
+```bash
+npm install
+```
+
+Pull the postgres docker image
+```bash
+npm run docker-pull-postgres
+```
+
+Run postgres docker container
+```bash
+npm run docker-run-postgres
+```
+
+Create a .env file in the project root folder with the following
+
+```bash
+WIP
+```
+
+## Running Locally
+
+```bash
+npm run dev
+```
+To run the telegram bot locally and connected to the postgres docker container
+
+## Testing
+
+Run the following command to execute the unit tests
+```bash
+npm run test
+```
+
+## Deployment
+
 ## Good To Have
 
 1. Redis for caching
@@ -14,3 +54,5 @@ Telegram bot for logging daily work done
 ## To Do
 
 1. Rename GroupChat.js in db/models to groupChat
+2. Handle deletion from groups
+3. Handle group chats where bot is the only member left
