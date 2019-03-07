@@ -19,7 +19,7 @@ export default {
                         checkoutTimestamp: {
                             $eq: null,
                         },
-                        id: {
+                        personId: {
                             $eq: person.id
                         },
                     },
