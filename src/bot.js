@@ -55,7 +55,7 @@ export default class Bot {
     registerPrivateCommands(privateCommands) {
         privateCommands.forEach((command) => {
             this.bot.command(command.name, async (ctx) => {
-                if (this.isPrivateChat(ctx.chat)) {
+                if (this.isChatOfType("private", ctx.chat)) {
                     ctx.reply(
                         await command.process({
                             message: ctx.message,
@@ -80,7 +80,7 @@ export default class Bot {
     registerGroupCommands(groupCommands) {
         groupCommands.forEach((command) => {
             this.bot.command(command.name, async (ctx) => {
-                if (!this.isPrivateChat(ctx.chat)) {
+                if (this.isChatOfType("group", ctx.chat)) {
                     ctx.reply(
                         await command.process({
                             from: ctx.from,
@@ -128,8 +128,12 @@ export default class Bot {
         );
     }
 
-    isPrivateChat(chat) {
-        return !!chat && chat.type === "private";
+    // throw exception is type is empty or not a string
+    isChatOfType(type, chat) {
+        if (!type || type.length === 0) {
+            throw new Error("Missing/invalid chat type");
+        }
+        return !!chat && chat.type === type;
     }
 
     async start() {

@@ -15,45 +15,7 @@ describe("Bot", () => {
         bot = new Bot(Telegram, null, null, {});
     });
 
-    describe("isPrivateChat method", () => {
-        it("should return true when isPrivateChat method is invoked with private chat", () => {
-            const input = {
-                type: "private",
-            };
-            const result = bot.isPrivateChat(input);
-            expect(typeof result).to.equal("boolean");
-            expect(result).to.be.true;
-        });
-
-        it("should return false when isPrivateChat method is invoked with group chat", () => {
-            const input = {
-                type: "group",
-            };
-            const result = bot.isPrivateChat(input);
-            expect(typeof result).to.equal("boolean");
-            expect(result).to.be.false;
-        });
-
-        it("should return false when isPrivateChat method is invoked with undefined", () => {
-            const result = bot.isPrivateChat();
-            expect(typeof result).to.equal("boolean");
-            expect(result).to.be.false;
-        });
-
-        it("should return false when isPrivateChat method is invoked with null", () => {
-            const result = bot.isPrivateChat(null);
-            expect(typeof result).to.equal("boolean");
-            expect(result).to.be.false;
-        });
-
-        it("should return false when isPrivateChat method is invoked with empty object", () => {
-            const result = bot.isPrivateChat({});
-            expect(typeof result).to.equal("boolean");
-            expect(result).to.be.false;
-        });
-    });
-
-    describe("isAddedToGroupChat", () => {
+    describe("isAddedToGroupChat method", () => {
         it("should return true if is bot is added as group chat is created", () => {
             const input = {
                 group_chat_created: true,
@@ -94,6 +56,47 @@ describe("Bot", () => {
             const result = bot.isAddedToGroupChat(input);
             expect(typeof result).to.equal("boolean");
             expect(result).to.be.false;
+        });
+    });
+
+    describe("isChatOfType method", () => {
+        it("should throw an error if first argument is not a valid string", () => {
+            expect(() => bot.isChatOfType()).to.throw(
+                Error,
+                "Missing/invalid chat type"
+            );
+        });
+
+        it("should return true if chat is a group chat", () => {
+            expect(
+                bot.isChatOfType("group", {
+                    type: "group",
+                })
+            ).to.be.true;
+        });
+
+        it("should return false if chat is not a group chat", () => {
+            expect(
+                bot.isChatOfType("group", {
+                    type: "private",
+                })
+            ).to.be.false;
+        });
+
+        it("should return false if chat has no type", () => {
+            expect(bot.isChatOfType("group", {})).to.be.false;
+        });
+
+        it("should return false if chat has no type", () => {
+            expect(bot.isChatOfType("group", { type: "" })).to.be.false;
+        });
+
+        it("should return false if only 1 argument is passed in", () => {
+            expect(bot.isChatOfType("group")).to.be.false;
+        });
+
+        it("should return false if null is passed as second argument", () => {
+            expect(bot.isChatOfType("group", null)).to.be.false;
         });
     });
 });
