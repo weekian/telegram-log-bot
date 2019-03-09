@@ -32,6 +32,23 @@ export default class Bot {
         this.handleAddedToGroup(addedToGroupHandler);
     }
 
+    // command handlers for group membership
+    handleGroupMembership(handler) {
+        this.bot.on("message", async (ctx) => {
+            if (this.isChatOfType("group", ctx.chat)) {
+                if (this.isBotAddedWithGroupChatCreation(ctx.message)) {
+                    // Add Group Chat
+                } else if (this.isAddAfterGroupChatCreation(ctx.message)) {
+                    // (optional) Add Group Chat if bot is inside
+                    // (optional) register other users if got others
+                } else if (this.isDeletionFromGroupChat(ctx.message)) {
+                    // handle deletion from group chat of self or user
+                    // Good to have: If chat has no members left (1 for self), delete group chat
+                }
+            }
+        });
+    }
+
     // Command handlers for all types of chats
     registerCommands(commands) {
         commands.forEach((command) => {
@@ -117,18 +134,26 @@ export default class Bot {
         });
     }
 
-    isAddedToGroupChat(message) {
+    // Checks if message is regarding deletion from group chat
+    isDeletionFromGroupChat(message) {
         return (
             !!message &&
-            (message.group_chat_created ||
-                (!!message.new_chat_members &&
-                    message.new_chat_members.some(
-                        (e) => e.id === this.bot.options.id
-                    )))
+            !!message.left_chat_member &&
+            typeof message.left_chat_member === "object"
         );
     }
 
-    // throw exception is type is empty or not a string
+    // Checks if message is regarding addition of members (may be bot) after group chat creation
+    isAddAfterGroupChatCreation(message) {
+        return !!message && Array.isArray(message.new_chat_members);
+    }
+
+    // Checks if bot is created when group chat is created
+    isBotAddedWithGroupChatCreation(message) {
+        return !!message && !!message.group_chat_created;
+    }
+
+    // Checks if message originates from a group or private chat
     isChatOfType(type, chat) {
         if (!type || type.length === 0) {
             throw new Error("Missing/invalid chat type");
