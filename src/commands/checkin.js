@@ -20,7 +20,7 @@ export default {
                             $eq: null,
                         },
                         personId: {
-                            $eq: person.id
+                            $eq: person.id,
                         },
                     },
                 })) !== 0;
@@ -60,7 +60,22 @@ export default {
                     )
                 );
             }
-            await Promise.all(broadcastPromises);
+            const results = await Promise.all(
+                broadcastPromises.map((promise) => {
+                    return promise
+                        .then((result) => {
+                            return { success: true, result };
+                        })
+                        .catch((error) => {
+                            return { success: false, error };
+                        });
+                })
+            );
+            for (let i = 0; i < results.length; i += 1) {
+                if (!results[i].success) {
+                    console.error("Broadcast failed with ", results[i].error);
+                }
+            }
         }
 
         return `Hi ${
