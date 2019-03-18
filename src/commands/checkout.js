@@ -69,7 +69,32 @@ export default {
                 )
             );
         }
-        await Promise.all(broadcastPromises);
+        const broadcastResults = await Promise.all(
+            broadcastPromises.map((promise) => {
+                return promise
+                    .then((result) => {
+                        return {
+                            success: true,
+                            result,
+                        };
+                    })
+                    .catch((error) => {
+                        return {
+                            success: false,
+                            error,
+                        };
+                    });
+            })
+        );
+
+        for (let i = 0; i < broadcastResults.length; i += 1) {
+            if (!broadcastResults[i].success) {
+                console.log(
+                    "Error broadcasting message with error: ",
+                    broadcastResults[i].error
+                );
+            }
+        }
 
         return (
             `Hi ${from.first_name}, ` +
