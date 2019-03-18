@@ -9,6 +9,7 @@ describe("/checkin command", () => {
     let sessionCountStub;
     let findOrCreateSpy;
     let sendMessageStub;
+    let consoleDebugStub;
     const from = {
         id: 12345,
         first_name: "Bob",
@@ -44,7 +45,7 @@ describe("/checkin command", () => {
     };
 
     before(() => {
-        sinon.stub(console, "error");
+        consoleDebugStub = sinon.stub(console, "error");
     });
 
     beforeEach(() => {
@@ -62,6 +63,10 @@ describe("/checkin command", () => {
         findOrCreateSpy.restore();
         sessionCountStub.restore();
         personFindOrCreateStub.restore();
+    });
+
+    after(() => {
+        consoleDebugStub.restore();
     });
 
     it("should be triggered when /checkin command is sent", () => {
