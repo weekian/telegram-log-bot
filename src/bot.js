@@ -11,6 +11,7 @@ export default class Bot {
         token,
         env,
         database,
+        logger,
         addedToGroupHandler,
         commands = [],
         privateCommands = [],
@@ -18,6 +19,9 @@ export default class Bot {
     ) {
         // Initialize Telegram Bot
         this.bot = new Telegram(token);
+
+        // Store logger
+        this.logger = logger;
 
         // Store database object and related Models
         this.database = database.db;
@@ -62,6 +66,7 @@ export default class Bot {
                         Person: this.Person,
                         GroupChat: this.GroupChat,
                         Session: this.Session,
+                        logger: this.logger,
                     })
                 );
             });
@@ -82,6 +87,7 @@ export default class Bot {
                             Person: this.Person,
                             GroupChat: this.GroupChat,
                             Session: this.Session,
+                            logger: this.logger,
                         })
                     );
                 } else {
@@ -106,6 +112,7 @@ export default class Bot {
                             Person: this.Person,
                             GroupChat: this.GroupChat,
                             Session: this.Session,
+                            logger: this.logger,
                         })
                     );
                 } else {
@@ -128,6 +135,7 @@ export default class Bot {
                         Person: this.Person,
                         GroupChat: this.GroupChat,
                         Session: this.Session,
+                        logger: this.logger,
                     })
                 );
             }
