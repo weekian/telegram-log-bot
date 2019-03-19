@@ -9,6 +9,7 @@ describe("/checkin command", () => {
     let sessionCountStub;
     let findOrCreateSpy;
     let sendMessageStub;
+    let consoleDebugStub;
     const from = {
         id: 12345,
         first_name: "Bob",
@@ -43,6 +44,10 @@ describe("/checkin command", () => {
         getGroupChats: async () => [],
     };
 
+    before(() => {
+        consoleDebugStub = sinon.stub(console, "error");
+    });
+
     beforeEach(() => {
         sendMessageStub = sinon.stub(telegram, "sendMessage");
         findOrCreateSpy = sinon.spy(
@@ -58,6 +63,10 @@ describe("/checkin command", () => {
         findOrCreateSpy.restore();
         sessionCountStub.restore();
         personFindOrCreateStub.restore();
+    });
+
+    after(() => {
+        consoleDebugStub.restore();
     });
 
     it("should be triggered when /checkin command is sent", () => {
@@ -160,13 +169,30 @@ describe("/checkin command", () => {
         expect(sendMessageStub.calledTwice).to.be.true;
         const [firstChatId, firstText] = sendMessageStub.getCall(0).args;
         const [secondChatId, secondText] = sendMessageStub.getCall(1).args;
+        const expectedBroadcastMsg =
+            "Hi everyone, Bob has checked in at 6:39PM on Sunday, 3rd March 2019";
         expect(firstChatId).to.equal(-444);
         expect(secondChatId).to.equal(-555);
-        expect(firstText).to.equal(
-            "Hi everyone, Bob has checked in at 6:39PM on Sunday, 3rd March 2019"
-        );
-        expect(secondText).to.equal(
-            "Hi everyone, Bob has checked in at 6:39PM on Sunday, 3rd March 2019"
-        );
+        expect(firstText).to.equal(expectedBroadcastMsg);
+        expect(secondText).to.equal(expectedBroadcastMsg);
+    });
+
+    it("should not exit the application if bot no longer has access to group chat and tries to send message to it", async () => {
+        personFindOrCreateStub.resolves([
+            findOrCreateReturnedPersonWithGroupChats,
+            false,
+        ]);
+        sessionCountStub.resolves(0);
+        sendMessageStub.rejects({ failed: true });
+
+        expect(
+            typeof (await checkinCommand.process({
+                message,
+                from,
+                Person,
+                Session,
+                telegram,
+            }))
+        ).to.equal("string");
     });
 });
