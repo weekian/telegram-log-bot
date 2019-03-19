@@ -1,7 +1,7 @@
 import { describe, it, beforeEach, afterEach } from "mocha";
 import moment from "moment";
 import sinon from "sinon";
-import expect, { Person, Session, telegram } from "../utility";
+import expect, { Person, Session, telegram, logger } from "../utility";
 import checkinCommand from "../../src/commands/checkin";
 
 describe("/checkin command", () => {
@@ -9,7 +9,6 @@ describe("/checkin command", () => {
     let sessionCountStub;
     let findOrCreateSpy;
     let sendMessageStub;
-    let consoleDebugStub;
     const from = {
         id: 12345,
         first_name: "Bob",
@@ -44,10 +43,6 @@ describe("/checkin command", () => {
         getGroupChats: async () => [],
     };
 
-    before(() => {
-        consoleDebugStub = sinon.stub(console, "error");
-    });
-
     beforeEach(() => {
         sendMessageStub = sinon.stub(telegram, "sendMessage");
         findOrCreateSpy = sinon.spy(
@@ -63,10 +58,6 @@ describe("/checkin command", () => {
         findOrCreateSpy.restore();
         sessionCountStub.restore();
         personFindOrCreateStub.restore();
-    });
-
-    after(() => {
-        consoleDebugStub.restore();
     });
 
     it("should be triggered when /checkin command is sent", () => {
@@ -85,6 +76,7 @@ describe("/checkin command", () => {
             from,
             Person,
             Session,
+            logger,
         });
         expect(sessionCountStub.calledOnce).to.be.true;
         expect(typeof result).to.equal("string");
@@ -105,6 +97,7 @@ describe("/checkin command", () => {
             from,
             Person,
             Session,
+            logger,
         });
         expect(sessionCountStub.calledOnce).to.be.true;
         expect(personFindOrCreateStub.calledOnce).to.be.true;
@@ -122,6 +115,7 @@ describe("/checkin command", () => {
             from,
             Person,
             Session,
+            logger,
         });
 
         expect(sessionCountStub.calledOnce).to.be.true;
@@ -142,6 +136,7 @@ describe("/checkin command", () => {
             from,
             Person,
             Session,
+            logger,
         });
 
         expect(sessionCountStub.called).to.be.false;
@@ -164,6 +159,7 @@ describe("/checkin command", () => {
             Person,
             Session,
             telegram,
+            logger,
         });
 
         expect(sendMessageStub.calledTwice).to.be.true;
@@ -192,6 +188,7 @@ describe("/checkin command", () => {
                 Person,
                 Session,
                 telegram,
+                logger,
             }))
         ).to.equal("string");
     });

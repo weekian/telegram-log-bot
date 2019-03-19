@@ -1,5 +1,6 @@
 import chai from "chai";
 import chaiString from "chai-string";
+import testLogger from "../src/logger";
 
 chai.use(chaiString);
 
@@ -21,6 +22,8 @@ export const GroupChat = {
 export const telegram = {
     sendMessage: () => {},
 };
+
+export const logger = testLogger("test");
 
 export class Telegram {
     constructor(token) {

@@ -6,7 +6,7 @@ momentDurationFormatSetup(moment);
 
 export default {
     name: "checkout",
-    process: async ({ message, from, Person, telegram }) => {
+    process: async ({ message, from, Person, telegram, logger }) => {
         const [person, created] = await Person.findOrCreate({
             where: {
                 id: from.id,
@@ -89,7 +89,7 @@ export default {
 
         for (let i = 0; i < broadcastResults.length; i += 1) {
             if (!broadcastResults[i].success) {
-                console.log(
+                logger.warn(
                     "Error broadcasting message with error: ",
                     broadcastResults[i].error
                 );
