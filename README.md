@@ -14,19 +14,25 @@ npm install
 ```
 
 Pull the postgres docker image
+
 ```bash
 npm run docker-pull-postgres
 ```
 
 Run postgres docker container
+
 ```bash
 npm run docker-run-postgres
 ```
 
-Create a .env file in the project root folder with the following
+Create a .env file in the project root folder with the following for local development:
 
-```bash
-WIP
+```text
+TELEGRAM_TOKEN=<token from https://t.me/BotFather>
+PORT=<port>
+DATABASE_URL=<postgres URL e.g. postgres://postgres:docker@localhost:5432/postgres for docker>
+TZ=<default timezone for bot to display time e.g. Asia/Singapore>
+NODE_ENV=development
 ```
 
 ## Running Locally
@@ -34,11 +40,13 @@ WIP
 ```bash
 npm run dev
 ```
+
 To run the telegram bot locally and connected to the postgres docker container
 
 ## Testing
 
 Run the following command to execute the unit tests
+
 ```bash
 npm run test
 ```
@@ -56,3 +64,4 @@ npm run test
 1. Rename GroupChat.js in db/models to groupChat
 2. Handle deletion from groups
 3. Handle group chats where bot is the only member left
+4. Implement rest of bot commands
