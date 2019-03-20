@@ -1,6 +1,6 @@
 export default {
     name: "manual",
     process: async () => {
-        return "manual";
+        return "Oops, this command is not yet implemented";
     },
 };
