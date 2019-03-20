@@ -1,6 +1,6 @@
 export default {
     name: "skip",
     process: async () => {
-        return "skip";
+        return "Oops, this command is not yet implemented";
     },
 };
