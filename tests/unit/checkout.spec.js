@@ -3,17 +3,10 @@ import sinon from "sinon";
 import expect, { Person, Session, telegram } from "../utility";
 import checkoutCommand from "../../src/commands/checkout";
 
-// 1. findOrCreate Person
-// 2. If created is true, return no active session error
-// 3. get array session index 0 where checkoutTimestamp is null
-// 4. if array is empty, return error
-// 5. set the checkoutTimestamp to message.date
-// 6. calculate the duration from session.checkinTimestamp to session.checkoutTimestamp and format it to human-friendly
-// 7. Return formatted success message
-
 describe("/checkout command", () => {
     let telegramSendMessageStub;
     let personFindOrCreateStub;
+    let consoleDebugStub;
     const from = {
         id: 12345,
         first_name: "Bob",
@@ -70,6 +63,10 @@ describe("/checkout command", () => {
         },
     };
 
+    before(() => {
+        consoleDebugStub = sinon.stub(console, "error");
+    });
+
     beforeEach(() => {
         telegramSendMessageStub = sinon.stub(telegram, "sendMessage");
         personFindOrCreateStub = sinon.stub(Person, "findOrCreate");
@@ -78,6 +75,10 @@ describe("/checkout command", () => {
     afterEach(() => {
         telegramSendMessageStub.restore();
         personFindOrCreateStub.restore();
+    });
+
+    after(() => {
+        consoleDebugStub.restore();
     });
 
     it("should be triggered when /checkout command is sent", () => {
@@ -140,6 +141,7 @@ describe("/checkout command", () => {
             findOrCreateFoundPersonWithActiveSessionAndGroupChats,
             false,
         ]);
+        telegramSendMessageStub.resolves({});
 
         await checkoutCommand.process({
             message,
@@ -163,5 +165,23 @@ describe("/checkout command", () => {
         expect(firstMessage).to.equal(
             "Hi everyone, Bob has checked out at 10:35PM on Tuesday, 5th March 2019 and logged a duration of 1hr 35mins"
         );
+    });
+
+    it("should not crash the application when trying to broadcast a message to an unaccessible group chat", async () => {
+        personFindOrCreateStub.resolves([
+            findOrCreateFoundPersonWithActiveSessionAndGroupChats,
+            false,
+        ]);
+        telegramSendMessageStub.rejects({ failed: true });
+
+        const result = await checkoutCommand.process({
+            message,
+            from,
+            Person,
+            Session,
+            telegram,
+        });
+
+        expect(typeof result).to.equal("string");
     });
 });
