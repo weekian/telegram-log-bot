@@ -37,14 +37,21 @@ export default class Bot {
     }
 
     // command handlers for group membership
-    handleGroupMembership(handler) {
+    handleGroupMembership({
+        addGroupChat,
+        addUsersToGroupChat,
+        removeUserFromGroupChat,
+        deleteGroupChat,
+    }) {
         this.bot.on("message", async (ctx) => {
             if (this.isChatOfType("group", ctx.chat)) {
                 if (this.isBotAddedWithGroupChatCreation(ctx.message)) {
                     // Add Group Chat
+                    // addGroupChat(ctx.chat.id);
                 } else if (this.isAddAfterGroupChatCreation(ctx.message)) {
                     // (optional) Add Group Chat if bot is inside
                     // (optional) register other users if got others
+                    // const addedMembers = ctx.message.new_chat_members;
                 } else if (this.isDeletionFromGroupChat(ctx.message)) {
                     // handle deletion from group chat of self or user
                     // Good to have: If chat has no members left (1 for self), delete group chat
