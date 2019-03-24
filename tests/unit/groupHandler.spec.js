@@ -98,7 +98,7 @@ describe("Added to group chat handler", () => {
             });
 
             expect(result).to.equal(
-                "Hi guys, thanks for the add. /register to allow me to broadcast your check-ins and check-outs here.\n\n@A is automatically registered\n@B is already registered"
+                "Hi guys, thanks for the add. /register to allow me to broadcast your check-ins and check-outs here.\n\nA is automatically registered to broadcast check-ins and check-outs\nB is already registered"
             );
         });
 
@@ -136,7 +136,7 @@ describe("Added to group chat handler", () => {
             });
 
             expect(result).to.equal(
-                "Hello new joiners,\n\n@A is automatically registered\n@B is already registered"
+                "A is automatically registered to broadcast check-ins and check-outs\nB is already registered"
             );
         });
     });

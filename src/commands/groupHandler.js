@@ -33,10 +33,10 @@ const addNewMember = async ({ groupChat, member, Person }) => {
 };
 
 export default {
-    addNewGroupChat: async ({ chatId, GroupChat }) => {
+    addNewGroupChat: async ({ chat, GroupChat }) => {
         const [groupChat, created] = await GroupChat.findOrCreate({
             where: {
-                id: chatId,
+                id: chat.id,
             },
         });
 
@@ -68,8 +68,6 @@ export default {
         if (otherMembersArr.length > 0) {
             if (message.length !== 0) {
                 message += "\n";
-            } else {
-                message = "Hello new joiners,\n";
             }
 
             const handleNewMemberPromises = [];
@@ -86,12 +84,15 @@ export default {
 
             for (let i = 0; i < addMemberResults.length; i += 1) {
                 const processedAddNewMember = addMemberResults[i];
+                if (message.length !== 0) {
+                    message += "\n";
+                }
                 if (processedAddNewMember.isAdded) {
-                    message += `\n@${
+                    message += `${
                         processedAddNewMember.first_name
-                    } is automatically registered`;
+                    } is automatically registered to broadcast check-ins and check-outs`;
                 } else {
-                    message += `\n@${
+                    message += `${
                         processedAddNewMember.first_name
                     } is already registered`;
                 }
