@@ -33,7 +33,7 @@ export default class Bot {
         this.registerPrivateCommands(privateCommands);
         this.registerGroupCommands(groupCommands);
         this.registerCommands(commands);
-        this.handleAddedToGroup(addedToGroupHandler);
+        this.handleGroupMembership(addedToGroupHandler);
     }
 
     // command handlers for group membership
@@ -45,30 +45,47 @@ export default class Bot {
     }) {
         this.bot.on("message", async (ctx) => {
             if (this.isChatOfType("group", ctx.chat)) {
+                this.logger.info("Message received belonging to group chat");
                 if (this.isBotAddedWithGroupChatCreation(ctx.message)) {
+                    this.logger.info(
+                        "Message on bot added with group chat creation"
+                    );
                     // Added to new chat or again into chat, asks members to /register
-                    addNewGroupChat({
-                        GroupChat: this.GroupChat,
-                        chat: ctx.chat,
-                    });
+                    ctx.reply(
+                        await addNewGroupChat({
+                            GroupChat: this.GroupChat,
+                            chat: ctx.chat,
+                        })
+                    );
                 } else if (this.isAddAfterGroupChatCreation(ctx.message)) {
+                    this.logger.info(
+                        "Message for added members after group chat creation"
+                    );
                     // if bot, add group chat and ask to /register
                     // if bot and others, add bot, add others and ask rest to /register
                     // and that the following users have already been added
-                    addUsersToGroupChat({
-                        newMembers: ctx.message.new_chat_members,
-                        botId: this.bot.options.id,
-                        GroupChat: this.GroupChat,
-                        chat: ctx.chat,
-                        logger: this.logger,
-                    });
+                    ctx.reply(
+                        await addUsersToGroupChat({
+                            newMembers: ctx.message.new_chat_members,
+                            botId: this.bot.options.id,
+                            GroupChat: this.GroupChat,
+                            chat: ctx.chat,
+                            logger: this.logger,
+                            Person: this.Person,
+                        })
+                    );
                 } else if (this.isDeletionFromGroupChat(ctx.message)) {
+                    this.logger.info(
+                        "Message is regarding deletion from group chat"
+                    );
                     // if non-bot, delete user from group chat if present
                     // if bot, delete the group chat and all related sessions, cascading
-                    removeUserFromGroupChat({
-                        leftMember: ctx.message.left_chat_member,
-                        botId: this.bot.options.id,
-                    });
+                    ctx.reply(
+                        await removeUserFromGroupChat({
+                            leftMember: ctx.message.left_chat_member,
+                            botId: this.bot.options.id,
+                        })
+                    );
                 }
             }
         });
@@ -145,23 +162,23 @@ export default class Bot {
         }, this);
     }
 
-    // Command handlers for add to group
-    handleAddedToGroup(handler) {
-        this.bot.on("message", async (ctx) => {
-            if (this.isAddedToGroupChat(ctx.message)) {
-                ctx.reply(
-                    await handler.process({
-                        chat: ctx.chat,
-                        database: this.database,
-                        Person: this.Person,
-                        GroupChat: this.GroupChat,
-                        Session: this.Session,
-                        logger: this.logger,
-                    })
-                );
-            }
-        });
-    }
+    // // Command handlers for add to group
+    // handleAddedToGroup(handler) {
+    //     this.bot.on("message", async (ctx) => {
+    //         if (this.isAddedToGroupChat(ctx.message)) {
+    //             ctx.reply(
+    //                 await handler.process({
+    //                     chat: ctx.chat,
+    //                     database: this.database,
+    //                     Person: this.Person,
+    //                     GroupChat: this.GroupChat,
+    //                     Session: this.Session,
+    //                     logger: this.logger,
+    //                 })
+    //             );
+    //         }
+    //     });
+    // }
 
     // Checks if message is regarding deletion from group chat
     isDeletionFromGroupChat(message) {
