@@ -10,7 +10,7 @@ describe("Bot", () => {
         sinon.stub(Bot.prototype, "registerPrivateCommands");
         sinon.stub(Bot.prototype, "registerGroupCommands");
         sinon.stub(Bot.prototype, "registerCommands");
-        sinon.stub(Bot.prototype, "handleAddedToGroup");
+        sinon.stub(Bot.prototype, "handleGroupMembership");
 
         bot = new Bot(Telegram, null, null, {});
     });
