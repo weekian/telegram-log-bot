@@ -38,7 +38,7 @@ export default class Bot {
 
     // command handlers for group membership
     handleGroupMembership({
-        addGroupChat,
+        addNewGroupChat,
         addUsersToGroupChat,
         removeUserFromGroupChat,
         deleteGroupChat,
@@ -46,15 +46,29 @@ export default class Bot {
         this.bot.on("message", async (ctx) => {
             if (this.isChatOfType("group", ctx.chat)) {
                 if (this.isBotAddedWithGroupChatCreation(ctx.message)) {
-                    // Add Group Chat
-                    // addGroupChat(ctx.chat.id);
+                    // Added to new chat or again into chat, asks members to /register
+                    addNewGroupChat({
+                        GroupChat: this.GroupChat,
+                        chat: ctx.chat,
+                    });
                 } else if (this.isAddAfterGroupChatCreation(ctx.message)) {
-                    // (optional) Add Group Chat if bot is inside
-                    // (optional) register other users if got others
-                    // const addedMembers = ctx.message.new_chat_members;
+                    // if bot, add group chat and ask to /register
+                    // if bot and others, add bot, add others and ask rest to /register
+                    // and that the following users have already been added
+                    addUsersToGroupChat({
+                        newMembers: ctx.message.new_chat_members,
+                        botId: this.bot.options.id,
+                        GroupChat: this.GroupChat,
+                        chat: ctx.chat,
+                        logger: this.logger,
+                    });
                 } else if (this.isDeletionFromGroupChat(ctx.message)) {
-                    // handle deletion from group chat of self or user
-                    // Good to have: If chat has no members left (1 for self), delete group chat
+                    // if non-bot, delete user from group chat if present
+                    // if bot, delete the group chat and all related sessions, cascading
+                    removeUserFromGroupChat({
+                        leftMember: ctx.message.left_chat_member,
+                        botId: this.bot.options.id,
+                    });
                 }
             }
         });
