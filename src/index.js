@@ -3,6 +3,7 @@ import Telegraf from "telegraf";
 import Server from "./server";
 import Bot from "./bot";
 import Database from "./db";
+import logger from "./logger";
 import startCommand from "./commands/start";
 import checkinCommand from "./commands/checkin";
 import checkoutCommand from "./commands/checkout";
@@ -24,6 +25,7 @@ import registerCommand from "./commands/register";
         TELEGRAM_TOKEN,
         NODE_ENV,
         database,
+        logger(NODE_ENV),
         addedToGroupEventHandler,
         [helpCommand, startCommand],
         [

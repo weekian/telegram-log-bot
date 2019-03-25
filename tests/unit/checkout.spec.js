@@ -1,12 +1,11 @@
 import { describe, it, beforeEach, afterEach } from "mocha";
 import sinon from "sinon";
-import expect, { Person, Session, telegram } from "../utility";
+import expect, { Person, Session, telegram, logger } from "../utility";
 import checkoutCommand from "../../src/commands/checkout";
 
 describe("/checkout command", () => {
     let telegramSendMessageStub;
     let personFindOrCreateStub;
-    let consoleDebugStub;
     const from = {
         id: 12345,
         first_name: "Bob",
@@ -63,10 +62,6 @@ describe("/checkout command", () => {
         },
     };
 
-    before(() => {
-        consoleDebugStub = sinon.stub(console, "error");
-    });
-
     beforeEach(() => {
         telegramSendMessageStub = sinon.stub(telegram, "sendMessage");
         personFindOrCreateStub = sinon.stub(Person, "findOrCreate");
@@ -75,10 +70,6 @@ describe("/checkout command", () => {
     afterEach(() => {
         telegramSendMessageStub.restore();
         personFindOrCreateStub.restore();
-    });
-
-    after(() => {
-        consoleDebugStub.restore();
     });
 
     it("should be triggered when /checkout command is sent", () => {
@@ -96,6 +87,7 @@ describe("/checkout command", () => {
             from,
             Person,
             Session,
+            logger,
         });
 
         expect(result).to.equal(
@@ -111,6 +103,7 @@ describe("/checkout command", () => {
             from,
             Person,
             Session,
+            logger,
         });
 
         expect(result).to.equal(
@@ -129,6 +122,7 @@ describe("/checkout command", () => {
             from,
             Person,
             Session,
+            logger,
         });
 
         expect(result).to.equal(
@@ -149,6 +143,7 @@ describe("/checkout command", () => {
             Person,
             Session,
             telegram,
+            logger,
         });
 
         const [firstChatId, firstMessage] = telegramSendMessageStub.getCall(
@@ -180,6 +175,7 @@ describe("/checkout command", () => {
             Person,
             Session,
             telegram,
+            logger,
         });
 
         expect(typeof result).to.equal("string");

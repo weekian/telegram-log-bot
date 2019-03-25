@@ -3,7 +3,7 @@ import Promise from "bluebird";
 
 export default {
     name: "checkin",
-    process: async ({ message, from, Person, Session, telegram }) => {
+    process: async ({ message, from, Person, Session, telegram, logger }) => {
         // finds person or creates new if doesn't exist
         const [person, created] = await Person.findOrCreate({
             where: {
@@ -73,7 +73,7 @@ export default {
             );
             for (let i = 0; i < results.length; i += 1) {
                 if (!results[i].success) {
-                    console.error("Broadcast failed with ", results[i].error);
+                    logger.warn("Broadcast failed with ", results[i].error);
                 }
             }
         }
