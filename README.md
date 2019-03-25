@@ -7,13 +7,15 @@ Telegram bot for logging daily work done
 
 ## Setup
 
+Note: Docker should be installed on the local machine
+
 First install the dependencies
 
 ```bash
 npm install
 ```
 
-Pull the postgres docker image
+Pull the postgres docker image (only applicable for the first time)
 
 ```bash
 npm run docker-pull-postgres
