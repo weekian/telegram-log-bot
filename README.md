@@ -63,7 +63,7 @@ npm run test
 
 ## To Do
 
-1. Rename GroupChat.js in db/models to groupChat
-2. Handle deletion from groups
+1. ~~Rename GroupChat.js in db/models to groupChat~~
+2. ~~Handle deletion from groups~~
 3. Handle group chats where bot is the only member left
 4. Implement rest of bot commands
