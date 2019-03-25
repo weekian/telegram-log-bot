@@ -3,18 +3,21 @@ import sinon from "sinon";
 import expect, { GroupChat, Person, logger } from "../utility";
 import groupHandler from "../../src/commands/groupHandler";
 
-describe("Added to group chat handler", () => {
+describe("Group chat handler", () => {
     let findOrCreateGroupChatStub;
     let findOrCreatePersonStub;
+    let destroyGroupChatStub;
 
     beforeEach(() => {
         findOrCreateGroupChatStub = sinon.stub(GroupChat, "findOrCreate");
         findOrCreatePersonStub = sinon.stub(Person, "findOrCreate");
+        destroyGroupChatStub = sinon.stub(GroupChat, "destroy");
     });
 
     afterEach(() => {
         findOrCreateGroupChatStub.restore();
         findOrCreatePersonStub.restore();
+        destroyGroupChatStub.restore();
     });
 
     describe("handling new group chat creation", () => {
@@ -138,6 +141,80 @@ describe("Added to group chat handler", () => {
             expect(result).to.equal(
                 "A is automatically registered to broadcast check-ins and check-outs\nB is already registered"
             );
+        });
+    });
+
+    describe("handling chat members removed from the group chat", () => {
+        it("should remove the group chat (cascading) if bot is removed from the group chat", async () => {
+            destroyGroupChatStub.resolves(1);
+            const chat = { id: -123 };
+
+            await groupHandler.deleteGroupChat({
+                chat,
+                GroupChat,
+                logger,
+            });
+            expect(
+                destroyGroupChatStub.withArgs({ where: { id: chat.id } })
+                    .calledOnce
+            ).to.be.true;
+        });
+
+        it("should remove the previously person from the group chat if registered person is removed and broadcast message", async () => {
+            findOrCreateGroupChatStub.resolves([
+                {
+                    hasPerson: async () => true,
+                    removePerson: async () => null,
+                },
+                false,
+            ]);
+            const leftMember = {
+                id: 1234,
+                first_name: "A",
+            };
+            const chat = {
+                id: -123,
+            };
+
+            const result = await groupHandler.removeUserFromGroupChat({
+                GroupChat,
+                leftMember,
+                chat,
+                logger,
+            });
+
+            expect(typeof result).to.equal("string");
+            expect(result).to.equal(
+                `${leftMember.first_name} has been de-registered` +
+                    ` from broadcasting to this group chat`
+            );
+        });
+
+        it("should do nothing if person removed from group chat is not registered", async () => {
+            findOrCreateGroupChatStub.resolves([
+                {
+                    hasPerson: async () => false,
+                    removePerson: async () => null,
+                },
+                false,
+            ]);
+            const leftMember = {
+                id: 1234,
+                first_name: "A",
+            };
+            const chat = {
+                id: -123,
+            };
+
+            const result = await groupHandler.removeUserFromGroupChat({
+                GroupChat,
+                leftMember,
+                chat,
+                logger,
+            });
+
+            expect(typeof result).to.equal("object");
+            expect(result).to.equal(null);
         });
     });
 });

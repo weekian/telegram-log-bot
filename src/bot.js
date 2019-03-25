@@ -80,12 +80,26 @@ export default class Bot {
                     );
                     // if non-bot, delete user from group chat if present
                     // if bot, delete the group chat and all related sessions, cascading
-                    ctx.reply(
-                        await removeUserFromGroupChat({
+                    if (
+                        ctx.message.left_chat_member.id === this.bot.options.id
+                    ) {
+                        await deleteGroupChat({
+                            chat: ctx.chat,
+                            GroupChat: this.GroupChat,
+                            logger: this.logger,
+                        });
+                    } else {
+                        const message = await removeUserFromGroupChat({
                             leftMember: ctx.message.left_chat_member,
-                            botId: this.bot.options.id,
-                        })
-                    );
+                            chat: ctx.chat,
+                            GroupChat: this.GroupChat,
+                            logger: this.logger,
+                        });
+                        // No message sent if removed user never registered
+                        if (message !== null || message !== undefined) {
+                            ctx.reply(message);
+                        }
+                    }
                 }
             }
         });
@@ -161,24 +175,6 @@ export default class Bot {
             });
         }, this);
     }
-
-    // // Command handlers for add to group
-    // handleAddedToGroup(handler) {
-    //     this.bot.on("message", async (ctx) => {
-    //         if (this.isAddedToGroupChat(ctx.message)) {
-    //             ctx.reply(
-    //                 await handler.process({
-    //                     chat: ctx.chat,
-    //                     database: this.database,
-    //                     Person: this.Person,
-    //                     GroupChat: this.GroupChat,
-    //                     Session: this.Session,
-    //                     logger: this.logger,
-    //                 })
-    //             );
-    //         }
-    //     });
-    // }
 
     // Checks if message is regarding deletion from group chat
     isDeletionFromGroupChat(message) {

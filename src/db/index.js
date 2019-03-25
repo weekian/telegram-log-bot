@@ -14,15 +14,17 @@ export default (url, env) => {
         // ---------- Model Definitions ----------------
         const Person = db.import(`${__dirname}/models/person`);
         const Session = db.import(`${__dirname}/models/session`);
-        const GroupChat = db.import(`${__dirname}/models/GroupChat`);
+        const GroupChat = db.import(`${__dirname}/models/groupChat`);
 
         // ---------- Model Association ----------------
         GroupChat.belongsToMany(Person, {
-            through: "member",
+            through: "members",
+            onDelete: "cascade",
+            hooks: true,
         });
 
         Person.belongsToMany(GroupChat, {
-            through: "member",
+            through: "members",
         });
 
         // Defines one to many relationship for Person has many session and session belongs to one Person

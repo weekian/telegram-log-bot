@@ -17,6 +17,7 @@ export const Session = {
 export const GroupChat = {
     findOne: () => {},
     findOrCreate: () => {},
+    destroy: () => {},
 };
 
 export const telegram = {

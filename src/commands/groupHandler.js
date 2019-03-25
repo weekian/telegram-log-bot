@@ -100,5 +100,31 @@ export default {
         }
         return message;
     },
-    removeUserFromGroupChat: async ({ leftMember, botId }) => {},
+    deleteGroupChat: async ({ chat, GroupChat, logger }) => {
+        const numDeleted = await GroupChat.destroy({ where: { id: chat.id } });
+        logger.info(
+            `Number of group chat deleted for chat id ${chat.id}` +
+                ` : ${numDeleted} (should be 1)`
+        );
+    },
+    removeUserFromGroupChat: async ({
+        leftMember,
+        chat,
+        GroupChat,
+        logger,
+    }) => {
+        const [groupChat, created] = await GroupChat.findOrCreate({
+            where: {
+                id: chat.id,
+            },
+        });
+        if (!created && (await groupChat.hasPerson(leftMember.id))) {
+            await groupChat.removePerson(leftMember.id);
+            return (
+                `${leftMember.first_name}` +
+                ` has been de-registered from broadcasting to this group chat`
+            );
+        }
+        return null;
+    },
 };
