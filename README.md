@@ -1,5 +1,6 @@
 # telegram-log-bot
 
+[![Build Status](https://travis-ci.org/weekian/telegram-log-bot.svg?branch=develop)](https://travis-ci.org/weekian/telegram-log-bot)
 [![Known Vulnerabilities](https://snyk.io/test/github/weekian/telegram-log-bot/badge.svg?targetFile=package.json)](https://snyk.io/test/github/weekian/telegram-log-bot?targetFile=package.json)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
