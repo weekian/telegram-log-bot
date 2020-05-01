@@ -1,74 +1,78 @@
 {
-    "name": "telegram-log-bot",
-    "version": "0.1.0",
-    "description": "Telegram bot for logging daily personal work done",
-    "engines": {
-        "node": "10.13.0",
-        "npm": "6.4.1"
-    },
-    "main": "dist/index.js",
-    "scripts": {
-        "start": "node dist/index.js",
-        "build": "babel src -d dist",
-        "dev": "nodemon --watch src/ --exec \"babel src -d dist --source-maps && node -r dotenv/config --inspect dist/\"",
-        "test": "mocha --require @babel/register --require @babel/polyfill tests/**/*.spec.js",
-        "lint": "eslint src/**",
-        "flow": "flow",
-        "prettier": "prettier --check \"src/**/*.js\"",
-        "install-flow-defs": "flow-typed install",
-        "heroku-postbuild": "npm run build",
-        "docker-pull-postgres": "docker pull postgres:10",
-        "docker-run-postgres": "docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres:10"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/weekian/telegram-log-bot.git"
-    },
-    "keywords": [
-        "telegram",
-        "bot"
-    ],
-    "author": "Yeam Wee Kian",
-    "license": "GPL-3.0-or-later",
-    "bugs": {
-        "url": "https://github.com/weekian/telegram-log-bot/issues"
-    },
-    "homepage": "https://github.com/weekian/telegram-log-bot#readme",
-    "devDependencies": {
-        "@babel/cli": "^7.2.3",
-        "@babel/core": "^7.2.2",
-        "@babel/plugin-transform-async-to-generator": "^7.2.0",
-        "@babel/plugin-transform-runtime": "^7.2.0",
-        "@babel/polyfill": "^7.2.5",
-        "@babel/preset-env": "^7.3.1",
-        "@babel/register": "^7.0.0",
-        "babel-eslint": "^10.0.1",
-        "chai": "^4.2.0",
-        "chai-string": "^1.5.0",
-        "dotenv": "^6.2.0",
-        "eslint": "^5.13.0",
-        "eslint-config-airbnb-base": "^13.1.0",
-        "eslint-config-prettier": "^4.0.0",
-        "eslint-plugin-chai-friendly": "^0.4.1",
-        "eslint-plugin-import": "^2.16.0",
-        "eslint-plugin-prettier": "^3.0.1",
-        "mocha": "^5.2.0",
-        "nodemon": "^1.18.10",
-        "nyc": "^13.3.0",
-        "prettier": "^1.16.4",
-        "sinon": "^7.2.4"
-    },
-    "dependencies": {
-        "@babel/runtime": "^7.3.4",
-        "bluebird": "^3.5.3",
-        "express": "^4.16.4",
-        "moment": "^2.24.0",
-        "moment-duration-format": "^2.2.2",
-        "morgan": "^1.9.1",
-        "pg": "^7.8.1",
-        "pg-hstore": "^2.3.2",
-        "sequelize": "^4.42.0",
-        "telegraf": "^3.27.0",
-        "winston": "^3.2.1"
-    }
+  "name": "telegram-log-bot",
+  "version": "0.1.0",
+  "description": "Telegram bot for logging daily personal work done",
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "babel src -d dist",
+    "dev": "nodemon --watch src/ --exec \"babel src -d dist --source-maps && node -r dotenv/config --inspect dist/\"",
+    "test": "mocha --require @babel/register --require @babel/polyfill tests/**/*.spec.js",
+    "lint": "eslint src/**",
+    "flow": "flow",
+    "prettier": "prettier --check \"src/**/*.js\"",
+    "install-flow-defs": "flow-typed install",
+    "heroku-postbuild": "npm run build",
+    "docker-pull-postgres": "docker pull postgres:10",
+    "docker-run-postgres": "docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres:10",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weekian/telegram-log-bot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot"
+  ],
+  "author": "Yeam Wee Kian",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/weekian/telegram-log-bot/issues"
+  },
+  "homepage": "https://github.com/weekian/telegram-log-bot#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "chai-string": "^1.5.0",
+    "dotenv": "^6.2.0",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
+    "nyc": "^13.3.0",
+    "prettier": "^1.16.4",
+    "sinon": "^7.2.4"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.3.4",
+    "bluebird": "^3.5.3",
+    "express": "^4.16.4",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.2.2",
+    "morgan": "^1.9.1",
+    "pg": "^7.8.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0",
+    "telegraf": "^3.27.0",
+    "winston": "^3.2.1",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
