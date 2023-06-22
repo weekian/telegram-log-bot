@@ -65,9 +65,9 @@
         "moment": "^2.24.0",
         "moment-duration-format": "^2.2.2",
         "morgan": "^1.9.1",
-        "pg": "^7.8.1",
+        "pg": "^8.4.0",
         "pg-hstore": "^2.3.2",
-        "sequelize": "^4.42.0",
+        "sequelize": "^6.1.0",
         "telegraf": "^3.27.0",
         "winston": "^3.2.1"
     }
